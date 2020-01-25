@@ -12,9 +12,6 @@ import plotly.express as px
 
 
 def main():
-    importlib.reload(sys)
-    #sys.setdefaultencoding('utf8')
-    
     df = load_data()
 
     page = st.sidebar.selectbox("Choose a page", ['Homepage', 'Exploration', 'Prediction'])
@@ -30,6 +27,7 @@ def main():
         sns.set(style="darkgrid")
         dataset = df.pivot("LAPNO", "DRIVERCODE", "S123")
 
+        # Load Plots
         load_heatmp(dataset)
         load_plot1(df)
 
