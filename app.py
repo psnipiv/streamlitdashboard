@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import json
+import importlib
 import sys
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -11,8 +12,8 @@ import plotly.express as px
 
 
 def main():
-    reload(sys)
-    sys.setdefaultencoding('utf8')
+    importlib.reload(sys)
+    #sys.setdefaultencoding('utf8')
     
     df = load_data()
 
@@ -23,18 +24,13 @@ def main():
         st.text('Select a page in the sidebar')
         st.dataframe(df)
     elif page == 'Exploration':
+        st.title('Race data analysis')
         if st.checkbox('Show column descriptions'):
             st.dataframe(df.describe())
         sns.set(style="darkgrid")
         dataset = df.pivot("LAPNO", "DRIVERCODE", "S123")
 
-        # Draw a heatmap with the numeric values in each cell
-        f, ax = plt.subplots(figsize=(19, 25))
-        sns.heatmap(dataset, annot=True, cmap="cubehelix",vmin=103, vmax=113, linewidths=0.5, fmt='g')
-        sns.despine(left=True, bottom=True)
-        st.pyplot()
-        
-        
+        load_heatmp(dataset)
         load_plot1(df)
 
     else:
@@ -49,9 +45,18 @@ def load_data():
     data = pd.DataFrame(jsondata)
     return data
 
+
+def load_heatmp(dataset):
+    # Draw a heatmap with the numeric values in each cell
+    st.text('Heatmap')
+    f, ax = plt.subplots(figsize=(19, 25))
+    sns.heatmap(dataset, annot=True, cmap="cubehelix",vmin=103, vmax=113, linewidths=0.5, fmt='g')
+    sns.despine(left=True, bottom=True)
+    st.pyplot()
+
+
 def load_plot1(df):
-    
-    
+    st.text('Scatter Plot')
     fig = px.scatter(df, x="LAPNO", y="S123", color="DRIVERCODE")
     fig.update_yaxes(range=[77,189])
     st.plotly_chart(fig)
