@@ -14,13 +14,15 @@ import plotly.express as px
 def main():
     df = load_data()
 
-    page = st.sidebar.selectbox("Choose a page", ['Homepage', 'Exploration', 'Prediction'])
+    page = st.sidebar.selectbox("Choose a page", ['Homepage', 'Visualization', 'Prediction'])
+    
+    st.text('Select a page in the sidebar')
 
     if page == 'Homepage':
         st.title('Singapore Grandprix')
-        st.text('Select a page in the sidebar')
+        st.text('Data set for the main race')
         st.dataframe(df)
-    elif page == 'Exploration':
+    elif page == 'Visualization':
         st.title('Race data analysis')
         if st.checkbox('Show column descriptions'):
             st.dataframe(df.describe())
@@ -28,7 +30,9 @@ def main():
         dataset = df.pivot("LAPNO", "DRIVERCODE", "S123")
 
         # Load Plots
+        st.text('Heatmap using seaborn library')
         load_heatmp(dataset)
+        st.text('Interactive Scatter using plotly library')
         load_plot1(df)
 
     else:
@@ -46,17 +50,17 @@ def load_data():
 
 def load_heatmp(dataset):
     # Draw a heatmap with the numeric values in each cell
-    st.text('Heatmap')
-    f, ax = plt.subplots(figsize=(19, 25))
+    f, ax = plt.subplots(figsize=(25, 25))
     sns.heatmap(dataset, annot=True, cmap="cubehelix",vmin=103, vmax=113, linewidths=0.5, fmt='g')
     sns.despine(left=True, bottom=True)
     st.pyplot()
 
 
 def load_plot1(df):
-    st.text('Scatter Plot')
-    fig = px.scatter(df, x="LAPNO", y="S123", color="DRIVERCODE")
-    fig.update_yaxes(range=[77,189])
+    fig = px.scatter(df, x="LAPNO", y="S123", color="DRIVERCODE",width=1200,height=600)
+    fig.update_xaxes(range=[0,65],title_text='Lap Number')
+    fig.update_yaxes(range=[75,190],title_text='Total sector time')
+    
     st.plotly_chart(fig)
 
 
