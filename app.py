@@ -2,71 +2,60 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import json
-import importlib
 import sys
 import matplotlib.pyplot as plt
-import seaborn as sns
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
 import plotly.express as px
-
-
+import statsmodels.api as sm
 
 
 def main():
-    df = load_data()
-
-    page = st.sidebar.selectbox("Choose a page", ['Homepage', 'Visualization', 'Prediction'])
     
-    st.text('Select a page in the sidebar')
+    df_S1 = load_data_session("S1")
+    df_S2 = load_data_session("S2")
 
-    if page == 'Homepage':
-        st.title('Singapore Grandprix')
-        st.text('Data set for the main race')
-        st.dataframe(df)
-    elif page == 'Visualization':
-        st.title('Race data analysis')
-        if st.checkbox('Show column descriptions'):
-            st.dataframe(df.describe())
-        sns.set(style="darkgrid")
-        dataset = df.pivot("LAPNO", "DRIVERCODE", "S123")
 
-        # Load Plots
-        st.text('Heatmap using seaborn library')
-        load_heatmp(dataset)
-        st.text('Interactive Scatter using plotly library')
-        load_plot1(df)
+    page = st.sidebar.selectbox("Choose a page", ['Home Page','Day 2 - Session 1', 'Day 2 - Session 2' ])
 
+    if page == 'Home Page':
+        st.title('Barcelona Test 2 Day 2')
+        st.text('Select a page in the sidebar')
+
+    elif page == 'Day 2 - Session 1':
+        load_plot1(df_S1,0,50)
+        load_heatmap(df_S1)
+    elif page == 'Day 2 - Session 2':
+        load_plot1(df_S2,0,160)
+        load_heatmap(df_S2)
     else:
-        st.title('In Progress...')
+        st.text('Select a page in the sidebar')
         
 
 @st.cache
-def load_data():
+def load_data_session(session):
+    sessionfile = ''
     jsondata = '{}'
-    with open(r'singapore_data.json') as json_file:
+    if session == 'S1':
+        sessionfile = 'Export_DataFrame_D2S1.json'
+    elif session == 'S2':
+        sessionfile = 'Export_DataFrame_D2S2.json'
+        
+    with open(sessionfile) as json_file:
         jsondata = json.load(json_file)
     data = pd.DataFrame(jsondata)
     return data
 
-
-def load_heatmp(dataset):
-    # Draw a heatmap with the numeric values in each cell
-    f, ax = plt.subplots(figsize=(25, 25))
-    sns.heatmap(dataset, annot=True, cmap="cubehelix",vmin=103, vmax=113, linewidths=0.5, fmt='g')
-    sns.despine(left=True, bottom=True)
-    st.pyplot()
-
-
-def load_plot1(df):
-    fig = px.scatter(df, x="LAPNO", y="S123", color="DRIVERCODE",width=1200,height=600)
-    fig.update_xaxes(range=[0,65],title_text='Lap Number')
-    fig.update_yaxes(range=[75,190],title_text='Total sector time')
-    
+def load_plot1(df,startlap,endlap):
+    fig = px.scatter(df, x="LAPS", y="S123", color="N",template="ggplot2",width=1200,height=600, hover_name="CURRENTLAP",trendline="lowess")
+    fig.update_xaxes(range=[startlap,endlap],title_text='Lap Number')
+    fig.update_yaxes(range=[77,102],title_text='Total sector time')
     st.plotly_chart(fig)
 
-
-
-
-
+def load_heatmap(df):
+    df = px.data.iris()
+    fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species", marginal_y="violin",marginal_x="box", trendline="ols")
+    st.plotly_chart(fig)
 
 if __name__ == '__main__':
     main()
