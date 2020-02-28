@@ -24,10 +24,8 @@ def main():
 
     elif page == 'Day 2 - Session 1':
         load_plot1(df_S1,0,50)
-        load_heatmap(df_S1)
     elif page == 'Day 2 - Session 2':
         load_plot1(df_S2,0,160)
-        load_heatmap(df_S2)
     else:
         st.text('Select a page in the sidebar')
         
@@ -50,11 +48,6 @@ def load_plot1(df,startlap,endlap):
     fig = px.scatter(df, x="LAPS", y="S123", color="N",template="ggplot2",width=1200,height=600, hover_name="CURRENTLAP",trendline="lowess")
     fig.update_xaxes(range=[startlap,endlap],title_text='Lap Number')
     fig.update_yaxes(range=[77,102],title_text='Total sector time')
-    st.plotly_chart(fig)
-
-def load_heatmap(df):
-    df = px.data.iris()
-    fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species", marginal_y="violin",marginal_x="box", trendline="ols")
     st.plotly_chart(fig)
 
 if __name__ == '__main__':
