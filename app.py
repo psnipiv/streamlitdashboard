@@ -6,6 +6,7 @@ import sys
 import matplotlib.pyplot as plt
 import plotly.express as px
 import seaborn as sns
+import math
 
 
 COLOR = "black"
@@ -39,9 +40,13 @@ def load_pages():
     df_r4P1 = load_data_session('r4P1')
     df_r4P2 = load_data_session('r4P2')
     df_r4P3 = load_data_session('r4P3')
-
-
-    page = st.sidebar.selectbox("Choose a page", ['Home Page','1-Austria GP','2-Styria GP','3-Hungary GP', '4-British GP' ])
+    # Race 5 Data
+    df_r5M = load_data_session('r5M')
+    df_r5P1 = load_data_session('r5P1')
+    df_r5P2 = load_data_session('r5P2')
+    df_r5P3 = load_data_session('r5P3')
+    
+    page = st.sidebar.selectbox("Choose a page", ['Home Page','1-Austria GP','2-Styria GP','3-Hungary GP', '4-British GP', "5-Anniversary GP" ])
 
     if page == 'Home Page':
         st.title('Formula 1 2020 Season')
@@ -65,21 +70,17 @@ def load_pages():
                 if df_r1P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r1P1,0,50,60,150)
-                    load_plot4(df_r1P1,60,150)
-
+                    load_plots(df_r1P1,True)
             elif sessionno =="Practice 2":
                 if df_r1P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r1P2,0,55,60,150)
-                    load_plot4(df_r1P2,60,150)
+                    load_plots(df_r1P2,True)
             elif sessionno =="Practice 3":
                 if df_r1P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r1P3,0,25,60,150)
-                    load_plot4(df_r1P3,60,150)
+                    load_plots(df_r1P3,True)
         elif testdayno == "Main Race":
             if df_r1M.empty:
                 st.write("Session Data is not available.")
@@ -102,20 +103,17 @@ def load_pages():
                 if df_r2P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r2P1,0,45,60,150)
-                    load_plot4(df_r2P1,60,150)
+                    load_plots(df_r2P1,True)
             elif sessionno =="Practice 2":
                 if df_r2P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r2P2,0,50,60,150)
-                    load_plot4(df_r2P2,60,150)
+                    load_plots(df_r2P2,True)
             elif sessionno =="Practice 3":
                 if df_r2P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r2P3,0,50,60,150)
-                    load_plot4(df_r2P3,60,150)
+                    load_plots(df_r2P3,True)
         elif testdayno == "Main Race":
             if df_r2M.empty:
                 st.write("Session Data is not available.")
@@ -138,20 +136,17 @@ def load_pages():
                 if df_r3P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r3P1,0,40,70,160)
-                    load_plot4(df_r3P1,70,170)
+                    load_plots(df_r3P1,True)
             elif sessionno =="Practice 2":
                 if df_r3P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r3P2,0,20,70,160)
-                    load_plot4(df_r3P2,70,170)
+                    load_plots(df_r3P2,True)
             elif sessionno =="Practice 3":
                 if df_r3P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r3P3,0,30,70,160)
-                    load_plot4(df_r3P3,70,170)
+                    load_plots(df_r3P3,True)
         elif testdayno == "Main Race":
             if df_r3M.empty:
                 st.write("Session Data is not available.")
@@ -174,27 +169,57 @@ def load_pages():
                 if df_r4P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r4P1,0,30,80,180)
-                    load_plot4(df_r4P1,80,180)
+                    load_plots(df_r4P1,True)
             elif sessionno =="Practice 2":
                 if df_r4P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r4P2,0,30,80,180)
-                    load_plot4(df_r4P2,80,180)
+                    load_plots(df_r4P2,True)
             elif sessionno =="Practice 3":
                 if df_r4P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plot1(df_r4P3,0,30,80,180)
-                    load_plot4(df_r4P3,80,180)
+                    load_plots(df_r4P3,True)
         elif testdayno == "Main Race":
             if df_r4M.empty:
                 st.write("Session Data is not available.")
             else:
                 st.write(df_r4M.describe())
-                load_plot2(df_r4M,1,75,60,140)
-                load_plot3(df_r4M,75,85)
+                load_plot2(df_r4M,1,55,85,170)
+                load_plot3(df_r4M,85,105)
+        else:
+            st.write("Session Data is not available.")
+
+    elif page == '5-Anniversary GP':
+        st.markdown("""# Formula 1 - 70th Anniversary Grand Prix 2020""")
+        # SelectBox
+        testdayno = st.selectbox("Select Practice Session",["Practice","Main Race"])
+
+        if testdayno == "Practice":
+            readme_text = st.markdown(read_markdown("5-Practice.md"))
+            sessionno = st.radio("Select session",("Practice 1","Practice 2","Practice 3"))
+            if sessionno =="Practice 1":
+                if df_r5P1.empty:
+                    st.write("Session Data is not available.")
+                else:
+                    load_plots(df_r5P1,True)
+            elif sessionno =="Practice 2":
+                if df_r5P2.empty:
+                    st.write("Session Data is not available.")
+                else:
+                    load_plots(df_r5P2,True)
+            elif sessionno =="Practice 3":
+                if df_r5P3.empty:
+                    st.write("Session Data is not available.")
+                else:
+                    load_plots(df_r5P3,True)
+        elif testdayno == "Main Race":
+            if df_r5M.empty:
+                st.write("Session Data is not available.")
+            else:
+                st.write(df_r5M.describe())
+                load_plot2(df_r5M,1,55,85,170)
+                load_plot3(df_r5M,85,105)
         else:
             st.write("Session Data is not available.")
 
@@ -203,6 +228,21 @@ def load_pages():
     else:
         st.text('Select a page in the sidebar')
         
+
+def load_plots(df,ispractice):
+    st.write(df.describe())
+    if ispractice:
+        maxlapval = df["LAPS"].max()
+        rounded_maxlapsval = int(math.ceil(maxlapval / 5.0)) * 5
+        means123val = df["S123"].mean()
+        rounded_means123val = int(math.ceil(means123val / 5.0)) * 5
+        mins123val = df["S123"].min()
+        rounded_mins123val = int(math.floor(mins123val / 5.0)) * 5
+        max123val = df["S123"].max()
+        rounded_max123val = int(math.floor(max123val / 5.0)) * 5
+        load_plot1(df,0,rounded_maxlapsval,rounded_mins123val,rounded_max123val)
+        df = df[df["S123"] < rounded_means123val]
+        load_plot4(df,rounded_mins123val,rounded_means123val)
 
 @st.cache
 def load_data_session(session):
@@ -243,10 +283,21 @@ def load_data_session(session):
         sessionfile = '4-Final_Practice3Data.json'
     elif session == 'r4M':
         sessionfile = '4-Final_MainRaceData.json'
-        
-    with open(sessionfile) as json_file:
-        jsondata = json.load(json_file)
-    data = pd.DataFrame(jsondata)
+
+    elif session == 'r5P1':
+        sessionfile = '5-Final_Practice1Data.json'
+    elif session == 'r5P2':
+        sessionfile = '5-Final_Practice2Data.json'
+    elif session == 'r5P3':
+        sessionfile = '5-Final_Practice3Data.json'
+    elif session == 'r5M':
+        sessionfile = '5-Final_MainRaceData.json'
+    if sessionfile != '':     
+        with open(sessionfile) as json_file:
+            jsondata = json.load(json_file)
+        data = pd.DataFrame(jsondata)
+    else:
+        data = pd.DataFrame()
     return data
 
 def load_plot1(df,startlap,endlap,mintime,maxtime):
@@ -266,7 +317,7 @@ def load_plot2(df,startlap,endlap,mintime,maxtime):
 def load_plot3(df,mintime,maxtime):
     df = df.sort_values(['N'],ascending=[1])
     sns.set(style="darkgrid")
-    st.text('Heatmap')
+    st.text('Heatmap for the main race lap times to indicate the ')
     dataset = df.pivot("LAPNO", "DRIVERCODE", "S123")
     f, ax = plt.subplots(figsize=(25, 25))
     sns.heatmap(dataset, annot=True, cmap="cubehelix",vmin=mintime, vmax=maxtime, linewidths=0.5, fmt='g')
@@ -275,15 +326,21 @@ def load_plot3(df,mintime,maxtime):
 
 def load_plot4(df,mintime,maxtime):
     df = df.sort_values(['N'],ascending=[1])
-    optiontyres = st.radio("By Tyre or Overall?",("Tyre Category","Overall"))
-    if optiontyres =="Tyre Category":
-        fig = px.box(df, x="NAME", y="S123",color="TYRE",width=1200,height=600)
-    elif optiontyres == "Overall":
+    optiontyres = st.radio("By Tyre or Overall?",("Overall","By Tyre Category"))
+    if optiontyres == "Overall":
         fig = px.box(df, x="NAME", y="S123",color ="NAME",width=1200,height=600)
+    if optiontyres =="By Tyre Category":
+        fig = px.box(df, x="NAME", y="S123",color="TYRE",width=1200,height=600)
+
     fig.update_yaxes(range=[mintime,maxtime],title_text='Total sector time')
     st.plotly_chart(fig)
 
 
+def read_markdown(markdownfile):
+    markdowncontentstr =""
+    if markdownfile != "":
+        markdowncontentstr = """{}""".format(open(markdownfile).read())
+    return markdowncontentstr
 
 def select_block_container_style():
     """Add selection section for setting setting the max-width and padding
