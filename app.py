@@ -330,9 +330,10 @@ def load_plot4(df,mintime,maxtime):
     if optiontyres == "Overall":
         fig = px.box(df, x="NAME", y="S123",color ="NAME",width=1200,height=600)
     if optiontyres =="By Tyre Category":
-        fig = px.box(df, x="NAME", y="S123",color="TYRE",width=1200,height=600)
+        fig = px.box(df, x="TYRECOMPOUND", y="S123",color="NAME",width=1200,height=600)
 
     fig.update_yaxes(range=[mintime,maxtime],title_text='Total sector time')
+    fig.update_xaxes(title_text='Tyre Compounds')
     st.plotly_chart(fig)
 
 

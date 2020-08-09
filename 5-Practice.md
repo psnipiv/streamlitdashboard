@@ -7,4 +7,10 @@ The first formula 1 race was held in 1950 at silverstone, which is also a place 
 
 It is one of the peculiar classic track  with fast, sweeping corners. Each corner has a unique name starting from 
 Abbey, Farm, Village, The Loop, Aintree, Brooklands, Luffield, Woodcote, Copse, Maggots, Becketts, Chapel, Stowe, Vale and Club. Some of the corners seems to very demanding with the new tyre compounds and faster machinery. Also last weekend witnessed 4 tryes failures including Danil Kvyat's crash at Maggotts & Becketts due to the right rear puncture.
-The tyre compounds for this weekend is C2, C3 and C4 which is softer than the previous week's C1, C2 and C3 and testing soft tyres for the right setup was primary objective in practice 1.
+The tyre compounds for this weekend is C2, C3 and C4 which is softer than the previous week's C1, C2 and C3 and testing soft tyres for the right setup was primary objective in practice 1. 
+
+
+The key highlight of this weekend was the  performance imporvement by Renault and the pure talent by Nico Hulkenberg who is the replacement for Sergio Perez. Also based on the data, there is great improvement in the lap time clocked by Albon in various tyre compounds.
+For the main race, expects a battle between Norris and Ocon. Expects Hulkenberg on the podium if there are no threats from Verstappen and Leclerc.
+
+Given below is the interactive timing charts for lap times in during practice sessions. Main Race data will be available after the race.
