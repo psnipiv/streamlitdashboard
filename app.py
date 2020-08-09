@@ -46,7 +46,7 @@ def load_pages():
     df_r5P2 = load_data_session('r5P2')
     df_r5P3 = load_data_session('r5P3')
     
-    page = st.sidebar.selectbox("Choose a page", ['Home Page','1-Austria GP','2-Styria GP','3-Hungary GP', '4-British GP', "5-Anniversary GP" ])
+    page = st.sidebar.selectbox("Choose a page", ['Home Page','1-Austria GP','2-Styria GP','3-Hungary GP', '4-British GP', "5-70th Anniversary GP" ])
 
     if page == 'Home Page':
         st.title('Formula 1 2020 Season')
@@ -94,11 +94,11 @@ def load_pages():
 
     elif page == '2-Styria GP':
         # SelectBox
-        testdayno = st.selectbox("Select Practice Session",["Practice","Main Race"])
+        testdayno = st.selectbox("Select Session",["Practice","Main Race"])
         st.write("On ", testdayno)
 
         if testdayno == "Practice":
-            sessionno = st.radio("Select session",("Practice 1","Practice 2","Practice 3"))
+            sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
             if sessionno =="Practice 1":
                 if df_r2P1.empty:
                     st.write("Session Data is not available.")
@@ -131,7 +131,7 @@ def load_pages():
         st.write("On ", testdayno)
 
         if testdayno == "Practice":
-            sessionno = st.radio("Select session",("Practice 1","Practice 2","Practice 3"))
+            sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
             if sessionno =="Practice 1":
                 if df_r3P1.empty:
                     st.write("Session Data is not available.")
@@ -160,11 +160,11 @@ def load_pages():
 
     elif page == '4-British GP':
         # SelectBox
-        testdayno = st.selectbox("Select Practice Session",["Practice","Main Race"])
+        testdayno = st.selectbox("Select Session",["Practice","Main Race"])
         st.write("On ", testdayno)
 
         if testdayno == "Practice":
-            sessionno = st.radio("Select session",("Practice 1","Practice 2","Practice 3"))
+            sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
             if sessionno =="Practice 1":
                 if df_r4P1.empty:
                     st.write("Session Data is not available.")
@@ -190,14 +190,15 @@ def load_pages():
         else:
             st.write("Session Data is not available.")
 
-    elif page == '5-Anniversary GP':
+
+    elif page == '5-70th Anniversary GP':
         st.markdown("""# Formula 1 - 70th Anniversary Grand Prix 2020""")
         # SelectBox
-        testdayno = st.selectbox("Select Practice Session",["Practice","Main Race"])
+        testdayno = st.selectbox("Select  Session",["Practice","Main Race"])
 
         if testdayno == "Practice":
             readme_text = st.markdown(read_markdown("5-Practice.md"))
-            sessionno = st.radio("Select session",("Practice 1","Practice 2","Practice 3"))
+            sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
             if sessionno =="Practice 1":
                 if df_r5P1.empty:
                     st.write("Session Data is not available.")
@@ -218,7 +219,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 st.write(df_r5M.describe())
-                load_plot2(df_r5M,1,55,85,170)
+                load_plot2(df_r5M,1,55,85,125)
                 load_plot3(df_r5M,85,105)
         else:
             st.write("Session Data is not available.")
