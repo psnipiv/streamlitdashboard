@@ -50,8 +50,13 @@ def load_pages():
     df_r6P1 = load_data_session('r6P1')
     df_r6P2 = load_data_session('r6P2')
     df_r6P3 = load_data_session('r6P3')
+    # Race 7 Data
+    df_r7M = load_data_session('r7M')
+    df_r7P1 = load_data_session('r7P1')
+    df_r7P2 = load_data_session('r7P2')
+    df_r7P3 = load_data_session('r7P3')
     
-    page = st.sidebar.selectbox("Choose a page", ['Home Page','1-Austria GP','2-Styria GP','3-Hungary GP', '4-British GP', "5-70th Anniversary GP", "6-Spanish GP" ])
+    page = st.sidebar.selectbox("Choose a page", ['Home Page','1-Austria GP','2-Styria GP','3-Hungary GP', '4-British GP', "5-70th Anniversary GP", "6-Spanish GP","7-Belgium GP" ])
 
     if page == 'Home Page':
         st.title('Formula 1 2020 Season')
@@ -90,7 +95,7 @@ def load_pages():
             if df_r1M.empty:
                 st.write("Session Data is not available.")
             else:
-                st.write(df_r1M.describe())                
+                #st.write(df_r1M.describe())                
                 load_plot2(df_r1M,1,75,60,130)
                 load_plot3(df_r1M,65,71)
         else:
@@ -123,7 +128,7 @@ def load_pages():
             if df_r2M.empty:
                 st.write("Session Data is not available.")
             else:
-                st.write(df_r2M.describe())
+                #st.write(df_r2M.describe())
                 load_plot2(df_r2M,1,75,60,130)
                 load_plot3(df_r2M,65,71)
         else:
@@ -156,7 +161,7 @@ def load_pages():
             if df_r3M.empty:
                 st.write("Session Data is not available.")
             else:
-                st.write(df_r3M.describe())
+                #st.write(df_r3M.describe())
                 load_plot2(df_r3M,1,75,60,140)
                 load_plot3(df_r3M,75,85)
         else:
@@ -189,7 +194,7 @@ def load_pages():
             if df_r4M.empty:
                 st.write("Session Data is not available.")
             else:
-                st.write(df_r4M.describe())
+                #st.write(df_r4M.describe())
                 load_plot2(df_r4M,1,55,85,170)
                 load_plot3(df_r4M,85,105)
         else:
@@ -223,7 +228,7 @@ def load_pages():
             if df_r5M.empty:
                 st.write("Session Data is not available.")
             else:
-                st.write(df_r5M.describe())
+                #st.write(df_r5M.describe())
                 load_plot2(df_r5M,1,55,85,125)
                 load_plot3(df_r5M,85,105)
         else:
@@ -257,9 +262,43 @@ def load_pages():
             if df_r6M.empty:
                 st.write("Session Data is not available.")
             else:
-                st.write(df_r6M.describe())
+                #st.write(df_r6M.describe())
                 load_plot2(df_r6M,1,66,55,110)
                 load_plot3(df_r6M,80,95)
+        else:
+            st.write("Session Data is not available.")
+
+
+    elif page == '7-Belgium GP':
+        st.markdown("""# Formula 1 - Belgium GP 2020""")
+        # SelectBox
+        testdayno = st.selectbox("Select  Session",["Practice","Main Race"])
+
+        if testdayno == "Practice":
+            readme_text = st.markdown(read_markdown("7-Practice.md"))
+            sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
+            if sessionno =="Practice 1":
+                if df_r7P1.empty:
+                    st.write("Session Data is not available.")
+                else:
+                    load_plots(df_r7P1,True)
+            elif sessionno =="Practice 2":
+                if df_r7P2.empty:
+                    st.write("Session Data is not available.")
+                else:
+                    load_plots(df_r7P2,True)
+            elif sessionno =="Practice 3":
+                if df_r7P3.empty:
+                    st.write("Session Data is not available.")
+                else:
+                    load_plots(df_r7P3,True)
+        elif testdayno == "Main Race":
+            if df_r7M.empty:
+                st.write("Session Data is not available.")
+            else:
+                #st.write(df_r7M.describe())
+                load_plot2(df_r7M,1,66,55,110)
+                load_plot3(df_r7M,80,95)
         else:
             st.write("Session Data is not available.")
 
@@ -275,12 +314,13 @@ def load_plots(df,ispractice):
         maxlapval = df["LAPS"].max()
         rounded_maxlapsval = int(math.ceil(maxlapval / 5.0)) * 5
         means123val = df["S123"].mean()
-        rounded_means123val = int(math.ceil(means123val / 5.0)) * 5
+        rounded_means123val = (int(math.ceil(means123val / 5.0)) * 5)
         mins123val = df["S123"].min()
         rounded_mins123val = int(math.floor(mins123val / 5.0)) * 5
         max123val = df["S123"].max()
         rounded_max123val = int(math.floor(max123val / 5.0)) * 5
         load_plot1(df,0,rounded_maxlapsval,rounded_mins123val,rounded_max123val)
+        st.write(rounded_means123val)
         df = df[df["S123"] < rounded_means123val]
         load_plot4(df,rounded_mins123val,rounded_means123val)
 
@@ -342,6 +382,15 @@ def load_data_session(session):
     elif session == 'r6M':
         sessionfile = '6-Final_MainRaceData.json'
 
+    elif session == 'r7P1':
+        sessionfile = '7-Final_Practice1Data.json'
+    elif session == 'r7P2':
+        sessionfile = '7-Final_Practice2Data.json'
+    elif session == 'r7P3':
+        sessionfile = '7-Final_Practice3Data.json'
+    elif session == 'r7M':
+        sessionfile = '7-Final_MainRaceData.json'
+
     if sessionfile != '':     
         with open(sessionfile) as json_file:
             jsondata = json.load(json_file)
@@ -367,7 +416,7 @@ def load_plot2(df,startlap,endlap,mintime,maxtime):
 def load_plot3(df,mintime,maxtime):
     df = df.sort_values(['N'],ascending=[1])
     sns.set(style="darkgrid")
-    st.text('Heatmap for the main race lap times to indicate the ')
+    st.text('Heatmap that indicate the total sector time for the main race. This gives an overview of push laps during the stint.')
     dataset = df.pivot("LAPNO", "DRIVERCODE", "S123")
     f, ax = plt.subplots(figsize=(25, 25))
     sns.heatmap(dataset, annot=True, cmap="cubehelix",vmin=mintime, vmax=maxtime, linewidths=0.5, fmt='g')
