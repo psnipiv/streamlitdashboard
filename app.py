@@ -298,7 +298,7 @@ def load_pages():
             else:
                 #st.write(df_r7M.describe())
                 load_plot2(df_r7M,1,44,75,190)
-                load_plot3(df_r7M,105,120S)
+                load_plot3(df_r7M,105,125)
         else:
             st.write("Session Data is not available.")
 
