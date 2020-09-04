@@ -81,21 +81,22 @@ def load_pages():
 
         if testdayno == "Practice":
             sessionno = st.radio("Select Practice session",("Practice 1","Practice 2","Practice 3"))
+            sectorno = get_sector()
             if sessionno =="Practice 1":
                 if df_r1P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r1P1,True)
+                    load_plots(df_r1P1,True,sectorno)
             elif sessionno =="Practice 2":
                 if df_r1P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r1P2,True)
+                    load_plots(df_r1P2,True,sectorno)
             elif sessionno =="Practice 3":
                 if df_r1P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r1P3,True)
+                    load_plots(df_r1P3,True,sectorno)
         elif testdayno == "Main Race":
             if df_r1M.empty:
                 st.write("Session Data is not available.")
@@ -106,7 +107,6 @@ def load_pages():
         else:
             st.write("Session Data is not available.")
 
-
     elif page == '2-Styria GP':
         # SelectBox
         testdayno = st.selectbox("Select Session",["Practice","Main Race"])
@@ -114,21 +114,22 @@ def load_pages():
 
         if testdayno == "Practice":
             sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
+            sectorno = get_sector()
             if sessionno =="Practice 1":
                 if df_r2P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r2P1,True)
+                    load_plots(df_r2P1,True,sectorno)
             elif sessionno =="Practice 2":
                 if df_r2P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r2P2,True)
+                    load_plots(df_r2P2,True,sectorno)
             elif sessionno =="Practice 3":
                 if df_r2P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r2P3,True)
+                    load_plots(df_r2P3,True,sectorno)
         elif testdayno == "Main Race":
             if df_r2M.empty:
                 st.write("Session Data is not available.")
@@ -139,7 +140,6 @@ def load_pages():
         else:
             st.write("Session Data is not available.")
 
-
     elif page == '3-Hungary GP':
         # SelectBox
         testdayno = st.selectbox("Select Practice Session",["Practice","Main Race"])
@@ -147,21 +147,22 @@ def load_pages():
 
         if testdayno == "Practice":
             sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
+            sectorno = get_sector()
             if sessionno =="Practice 1":
                 if df_r3P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r3P1,True)
+                    load_plots(df_r3P1,True,sectorno)
             elif sessionno =="Practice 2":
                 if df_r3P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r3P2,True)
+                    load_plots(df_r3P2,True,sectorno)
             elif sessionno =="Practice 3":
                 if df_r3P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r3P3,True)
+                    load_plots(df_r3P3,True,sectorno)
         elif testdayno == "Main Race":
             if df_r3M.empty:
                 st.write("Session Data is not available.")
@@ -172,7 +173,6 @@ def load_pages():
         else:
             st.write("Session Data is not available.")
 
-
     elif page == '4-British GP':
         # SelectBox
         testdayno = st.selectbox("Select Session",["Practice","Main Race"])
@@ -180,21 +180,22 @@ def load_pages():
 
         if testdayno == "Practice":
             sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
+            sectorno = get_sector()
             if sessionno =="Practice 1":
                 if df_r4P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r4P1,True)
+                    load_plots(df_r4P1,True,sectorno)
             elif sessionno =="Practice 2":
                 if df_r4P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r4P2,True)
+                    load_plots(df_r4P2,True,sectorno)
             elif sessionno =="Practice 3":
                 if df_r4P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r4P3,True)
+                    load_plots(df_r4P3,True,sectorno)
         elif testdayno == "Main Race":
             if df_r4M.empty:
                 st.write("Session Data is not available.")
@@ -205,7 +206,6 @@ def load_pages():
         else:
             st.write("Session Data is not available.")
 
-
     elif page == '5-70th Anniversary GP':
         st.markdown("""# Formula 1 - 70th Anniversary Grand Prix 2020""")
         # SelectBox
@@ -214,21 +214,22 @@ def load_pages():
         if testdayno == "Practice":
             readme_text = st.markdown(read_markdown("5-Practice.md"))
             sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
+            sectorno = get_sector()
             if sessionno =="Practice 1":
                 if df_r5P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r5P1,True)
+                    load_plots(df_r5P1,True,sectorno)
             elif sessionno =="Practice 2":
                 if df_r5P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r5P2,True)
+                    load_plots(df_r5P2,True,sectorno)
             elif sessionno =="Practice 3":
                 if df_r5P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r5P3,True)
+                    load_plots(df_r5P3,True,sectorno)
         elif testdayno == "Main Race":
             if df_r5M.empty:
                 st.write("Session Data is not available.")
@@ -239,7 +240,6 @@ def load_pages():
         else:
             st.write("Session Data is not available.")
 
-
     elif page == '6-Spanish GP':
         st.markdown("""# Formula 1 - Spanish GP 2020""")
         # SelectBox
@@ -248,21 +248,22 @@ def load_pages():
         if testdayno == "Practice":
             readme_text = st.markdown(read_markdown("6-Practice.md"))
             sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
+            sectorno = get_sector()
             if sessionno =="Practice 1":
                 if df_r6P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r6P1,True)
+                    load_plots(df_r6P1,True,sectorno)
             elif sessionno =="Practice 2":
                 if df_r6P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r6P2,True)
+                    load_plots(df_r6P2,True,sectorno)
             elif sessionno =="Practice 3":
                 if df_r6P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r6P3,True)
+                    load_plots(df_r6P3,True,sectorno)
         elif testdayno == "Main Race":
             if df_r6M.empty:
                 st.write("Session Data is not available.")
@@ -273,7 +274,6 @@ def load_pages():
         else:
             st.write("Session Data is not available.")
 
-
     elif page == '7-Belgium GP':
         st.markdown("""# Formula 1 - Belgium GP 2020""")
         # SelectBox
@@ -282,21 +282,22 @@ def load_pages():
         if testdayno == "Practice":
             readme_text = st.markdown(read_markdown("7-Practice.md"))
             sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
+            sectorno = get_sector()
             if sessionno =="Practice 1":
                 if df_r7P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r7P1,True)
+                    load_plots(df_r7P1,True,sectorno)
             elif sessionno =="Practice 2":
                 if df_r7P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r7P2,True)
+                    load_plots(df_r7P2,True,sectorno)
             elif sessionno =="Practice 3":
                 if df_r7P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r7P3,True)
+                    load_plots(df_r7P3,True,sectorno)
         elif testdayno == "Main Race":
             if df_r7M.empty:
                 st.write("Session Data is not available.")
@@ -307,7 +308,6 @@ def load_pages():
         else:
             st.write("Session Data is not available.")
 
-
     elif page == '8-Italian GP':
         st.markdown("""# Formula 1 - Italian GP 2020""")
         # SelectBox
@@ -316,21 +316,22 @@ def load_pages():
         if testdayno == "Practice":
             readme_text = st.markdown(read_markdown("8-Practice.md"))
             sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
+            sectorno = get_sector()
             if sessionno =="Practice 1":
                 if df_r8P1.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r8P1,True)
+                    load_plots(df_r8P1,True,sectorno)
             elif sessionno =="Practice 2":
                 if df_r8P2.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r8P2,True)
+                    load_plots(df_r8P2,True,sectorno)
             elif sessionno =="Practice 3":
                 if df_r8P3.empty:
                     st.write("Session Data is not available.")
                 else:
-                    load_plots(df_r8P3,True)
+                    load_plots(df_r8P3,True,sectorno)
         elif testdayno == "Main Race":
             if df_r8M.empty:
                 st.write("Session Data is not available.")
@@ -341,26 +342,28 @@ def load_pages():
         else:
             st.write("Session Data is not available.")
 
-
     else:
         st.text('Select a page in the sidebar')
         
+def get_sector():
+    sector = st.selectbox("Select Sector",["Overall","Sector 1","Sector 2","Sector 3"])
+    #sectorno = "S123"
+    if sector == "Overall":
+        sectorno = "S123"
+    elif sector == "Sector 1":
+        sectorno = "S1"
+    elif sector == "Sector 2":
+        sectorno = "S2"
+    elif sector == "Sector 3":
+        sectorno = "S3"
+    else:
+        sectorno = "S123"
+    return sectorno
 
-def load_plots(df,ispractice):
+
+def load_plots(df,ispractice,sectorno):
     #st.write(df.describe())
     if ispractice:
-        sector = st.selectbox("Select Sector",["Overall","Sector 1","Sector 2","Sector 3"])
-        #sectorno = "S123"
-        if sector == "Overall":
-            sectorno = "S123"
-        elif sector == "Sector 1":
-            sectorno = "S1"
-        elif sector == "Sector 2":
-            sectorno = "S2"
-        elif sector == "Sector 3":
-            sectorno = "S3"
-        else:
-            sectorno = "S123"
 
         maxlapval = df["LAPS"].max()
         rounded_maxlapsval = int(math.ceil(maxlapval / 5.0)) * 5
@@ -488,11 +491,11 @@ def load_plot3(df,mintime,maxtime):
 
 def load_plot4(df,mintime,maxtime,sectorno):
     df = df.sort_values(['N'],ascending=[1])
-    optiontyres = st.radio("By Tyre or Overall?",("Overall","By Tyre Category"))
+    optiontyres = st.radio("By Tyre Compound or Overall?",("Overall","Tyre Compound"))
     if optiontyres == "Overall":
         fig = px.box(df, x="NAME", y=sectorno,color ="NAME",width=1200,height=600)
         fig.update_xaxes(title_text='Name')
-    if optiontyres =="By Tyre Category":
+    if optiontyres =="Tyre Compound":
         fig = px.box(df, x="TYRECOMPOUND", y=sectorno,color="NAME",width=1200,height=600)
         fig.update_xaxes(title_text='Tyre Compounds')
 
