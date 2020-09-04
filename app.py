@@ -347,19 +347,36 @@ def load_pages():
         
 
 def load_plots(df,ispractice):
-    st.write(df.describe())
+    #st.write(df.describe())
     if ispractice:
+        sector = st.selectbox("Select Sector",["Overall","Sector 1","Sector 2","Sector 3"])
+        #sectorno = "S123"
+        if sector == "Overall":
+            sectorno = "S123"
+        elif sector == "Sector 1":
+            sectorno = "S1"
+        elif sector == "Sector 2":
+            sectorno = "S2"
+        elif sector == "Sector 3":
+            sectorno = "S3"
+        else:
+            sectorno = "S123"
+
         maxlapval = df["LAPS"].max()
         rounded_maxlapsval = int(math.ceil(maxlapval / 5.0)) * 5
-        means123val = df["S123"].mean()
-        rounded_means123val = (int(math.ceil(means123val / 5.0)) * 5)
-        mins123val = df["S123"].min()
-        rounded_mins123val = int(math.floor(mins123val / 5.0)) * 5
-        max123val = df["S123"].max()
-        rounded_max123val = int(math.floor(max123val / 5.0)) * 5
-        load_plot1(df,0,rounded_maxlapsval,rounded_mins123val,rounded_max123val)
-        df = df[df["S123"] < rounded_means123val]
-        load_plot4(df,rounded_mins123val,rounded_means123val)
+
+        meansectorval = df[sectorno].mean()
+        rounded_meansectorval = (int(math.ceil(meansectorval / 5.0)) * 5)
+
+        minsectorval = df[sectorno].min()
+        rounded_minsectorval = int(math.floor(minsectorval / 5.0)) * 5
+
+        maxectorval = df[sectorno].max()
+        rounded_max123val = int(math.floor(maxectorval / 5.0)) * 5
+        load_plot1(df,0,rounded_maxlapsval,rounded_minsectorval,rounded_max123val,sectorno)
+
+        df = df[df[sectorno] < rounded_meansectorval]
+        load_plot4(df,rounded_minsectorval,rounded_meansectorval,sectorno)
 
 @st.cache
 def load_data_session(session):
@@ -445,9 +462,9 @@ def load_data_session(session):
         data = pd.DataFrame()
     return data
 
-def load_plot1(df,startlap,endlap,mintime,maxtime):
+def load_plot1(df,startlap,endlap,mintime,maxtime,sectorno):
     df = df.sort_values(['N'],ascending=[1])
-    fig = px.scatter(df, x="LAPS", y="S123", color="NAME",template="ggplot2",width=1200,height=600, hover_name="TYRE",trendline="lowess")
+    fig = px.scatter(df, x="LAPS", y=sectorno, color="NAME",template="ggplot2",width=1200,height=600, hover_name="TYRE",trendline="lowess")
     fig.update_xaxes(range=[startlap,endlap],title_text='Lap Number')
     fig.update_yaxes(range=[mintime,maxtime],title_text='Total sector time')
     st.plotly_chart(fig)
@@ -469,14 +486,14 @@ def load_plot3(df,mintime,maxtime):
     sns.despine(left=True, bottom=True)
     st.pyplot()
 
-def load_plot4(df,mintime,maxtime):
+def load_plot4(df,mintime,maxtime,sectorno):
     df = df.sort_values(['N'],ascending=[1])
     optiontyres = st.radio("By Tyre or Overall?",("Overall","By Tyre Category"))
     if optiontyres == "Overall":
-        fig = px.box(df, x="NAME", y="S123",color ="NAME",width=1200,height=600)
+        fig = px.box(df, x="NAME", y=sectorno,color ="NAME",width=1200,height=600)
         fig.update_xaxes(title_text='Name')
     if optiontyres =="By Tyre Category":
-        fig = px.box(df, x="TYRECOMPOUND", y="S123",color="NAME",width=1200,height=600)
+        fig = px.box(df, x="TYRECOMPOUND", y=sectorno,color="NAME",width=1200,height=600)
         fig.update_xaxes(title_text='Tyre Compounds')
 
     fig.update_yaxes(range=[mintime,maxtime],title_text='Total sector time')
