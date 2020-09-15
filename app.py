@@ -376,9 +376,9 @@ def load_pages():
             if df_r9M.empty:
                 st.write("Session Data is not available.")
             else:
-                st.write(df_r9M.describe())
-                load_plot2(df_r9M,1,59,80,180)
-                load_plot3(df_r9M,80,95)
+                #st.write(df_r9M.describe())
+                load_plot2(df_r9M,1,59,75,210)
+                load_plot3(df_r9M,80,90)
         else:
             st.write("Session Data is not available.")
 
