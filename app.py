@@ -85,9 +85,14 @@ def load_pages():
     df_r13P1 = load_data_session('r13P1')
     df_r13P2 = load_data_session('r13P2')
     df_r13P3 = load_data_session('r13P3')
+    # Race 14 Data
+    df_r14M = load_data_session('r14M')
+    df_r14P1 = load_data_session('r14P1')
+    df_r14P2 = load_data_session('r14P2')
+    df_r14P3 = load_data_session('r14P3')
     
     page = st.sidebar.selectbox("Choose a page", ['Home Page','1-Austria GP','2-Styria GP','3-Hungary GP', '4-British GP', "5-70th Anniversary GP",
-     "6-Spanish GP","7-Belgium GP","8-Italian GP","9-Tuscany GP","10-Russian GP","11-Germany GP", "12-Portugal GP", "13-Imola GP" ])
+     "6-Spanish GP","7-Belgium GP","8-Italian GP","9-Tuscany GP","10-Russian GP","11-Germany GP", "12-Portugal GP", "13-Imola GP", "14-Turkish GP" ])
 
     if page == 'Home Page':
         st.title('Formula 1 2020 Season')
@@ -538,6 +543,40 @@ def load_pages():
         else:
             st.write("Session Data is not available.")
 
+    elif page == '14-Turkish GP':
+        st.markdown("""# Formula 1 - Turkish GP 2020""")
+        # SelectBox
+        testdayno = st.selectbox("Select  Session",["Practice","Main Race"])
+
+        if testdayno == "Practice":
+            readme_text = st.markdown(read_markdown("14-Practice.md"))
+            sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
+            sectorno = get_sector()
+            if sessionno =="Practice 1":
+                if df_r14P1.empty:
+                    st.write("Session Data is not available.")
+                else:
+                    load_plots(df_r14P1,True,sectorno)
+            elif sessionno =="Practice 2":
+                if df_r14P2.empty:
+                    st.write("Session Data is not available.")
+                else:
+                    load_plots(df_r14P2,True,sectorno)
+            elif sessionno =="Practice 3":
+                if df_r14P3.empty:
+                    st.write("Session Data is not available.")
+                else:
+                    load_plots(df_r14P3,True,sectorno)
+        elif testdayno == "Main Race":
+            if df_r14M.empty:
+                st.write("Session Data is not available.")
+            else:
+                #st.write(df_r14M.describe())
+                load_plot2(df_r14M,1,60,70,150)
+                load_plot3(df_r14M,75,85)
+        else:
+            st.write("Session Data is not available.")
+
     else:
         st.text('Select a page in the sidebar')
         
@@ -565,17 +604,29 @@ def load_plots(df,ispractice,sectorno):
         rounded_maxlapsval = int(math.ceil(maxlapval / 5.0)) * 5
 
         meansectorval = df[sectorno].mean()
-        rounded_meansectorval = (int(math.ceil(meansectorval / 5.0)) * 7.5)
+        rounded_meansectorval = int(math.ceil(meansectorval / 5.0)) * 7.5
 
         minsectorval = df[sectorno].min()
-        rounded_minsectorval = int(math.floor(minsectorval / 5.0)) * 5
+        rounded_minsectorval = (int(math.floor(minsectorval / 5.0)) * 5) - 10
 
         maxectorval = df[sectorno].max()
-        rounded_max123val = int(math.floor(maxectorval / 5.0)) * 5
-        load_plot1(df,0,rounded_maxlapsval,rounded_minsectorval,rounded_max123val,sectorno)
+        rounded_max123val = (int(math.floor(maxectorval / 5.0)) * 5) + 20
 
-        df = df[df[sectorno] < rounded_meansectorval]
-        load_plot4(df,rounded_minsectorval,rounded_meansectorval,sectorno)
+        excludeoutlap = st.radio("Exclude Out Laps?",("Yes","No"))
+        if excludeoutlap == "Yes":
+            newdf1 = df[df[sectorno] < meansectorval]
+            topdf = newdf1.groupby(['NAME','N'])[sectorno].mean().reset_index(level='NAME').sort_values(by=sectorno,ascending=True)
+            top10df = topdf.head(10)
+            st.markdown("""#### Top 10 drivers based on average laptime in this session.""")
+            st.text("Select the above dropdown to get performance by sector.")
+            st.table(top10df[['NAME',sectorno]])
+        else:
+            newdf1 = df
+
+        load_plot1(newdf1,0,rounded_maxlapsval,rounded_minsectorval,rounded_max123val,sectorno)
+
+        newdf2 = df[df[sectorno] < rounded_meansectorval]
+        load_plot4(newdf2,rounded_minsectorval,rounded_meansectorval,sectorno)
 
 @st.cache
 def load_data_session(session):
@@ -697,6 +748,15 @@ def load_data_session(session):
         sessionfile = '13-Final_Practice3Data.json'
     elif session == 'r13M':
         sessionfile = '13-Final_MainRaceData.json'
+
+    elif session == 'r14P1':
+        sessionfile = '14-Final_Practice1Data.json'
+    elif session == 'r14P2':
+        sessionfile = '14-Final_Practice2Data.json'
+    elif session == 'r14P3':
+        sessionfile = '14-Final_Practice3Data.json'
+    elif session == 'r14M':
+        sessionfile = '14-Final_MainRaceData.json'
 
     if sessionfile != '':     
         with open(sessionfile) as json_file:
