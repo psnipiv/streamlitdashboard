@@ -133,7 +133,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r1M.describe())                
-                load_plot2(df_r1M,1,75,60,130)
+                load_plot2(df_r1M,0,75,50,130)
                 load_plot3(df_r1M,65,71)
         else:
             st.write("Session Data is not available.")
@@ -166,7 +166,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r2M.describe())
-                load_plot2(df_r2M,1,75,60,130)
+                load_plot2(df_r2M,0,75,60,140)
                 load_plot3(df_r2M,65,71)
         else:
             st.write("Session Data is not available.")
@@ -199,7 +199,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r3M.describe())
-                load_plot2(df_r3M,1,75,60,140)
+                load_plot2(df_r3M,0,75,60,130)
                 load_plot3(df_r3M,75,85)
         else:
             st.write("Session Data is not available.")
@@ -232,7 +232,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r4M.describe())
-                load_plot2(df_r4M,1,55,85,170)
+                load_plot2(df_r4M,0,55,60,170)
                 load_plot3(df_r4M,85,105)
         else:
             st.write("Session Data is not available.")
@@ -266,7 +266,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r5M.describe())
-                load_plot2(df_r5M,1,55,85,125)
+                load_plot2(df_r5M,0,55,60,125)
                 load_plot3(df_r5M,85,105)
         else:
             st.write("Session Data is not available.")
@@ -300,7 +300,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r6M.describe())
-                load_plot2(df_r6M,1,66,55,110)
+                load_plot2(df_r6M,0,70,55,110)
                 load_plot3(df_r6M,80,95)
         else:
             st.write("Session Data is not available.")
@@ -334,7 +334,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r7M.describe())
-                load_plot2(df_r7M,1,44,75,190)
+                load_plot2(df_r7M,0,45,75,190)
                 load_plot3(df_r7M,105,125)
         else:
             st.write("Session Data is not available.")
@@ -368,7 +368,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r8M.describe())
-                load_plot2(df_r8M,1,53,80,180)
+                load_plot2(df_r8M,0,55,55,180)
                 load_plot3(df_r8M,80,95)
         else:
             st.write("Session Data is not available.")
@@ -402,7 +402,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r9M.describe())
-                load_plot2(df_r9M,1,59,75,210)
+                load_plot2(df_r9M,0,59,70,210)
                 load_plot3(df_r9M,80,90)
         else:
             st.write("Session Data is not available.")
@@ -436,7 +436,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r10M.describe())
-                load_plot2(df_r10M,1,53,85,210)
+                load_plot2(df_r10M,0,53,85,210)
                 load_plot3(df_r10M,95,110)
         else:
             st.write("Session Data is not available.")
@@ -470,7 +470,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r11M.describe())
-                load_plot2(df_r11M,1,65,85,170)
+                load_plot2(df_r11M,0,65,60,170)
                 load_plot3(df_r11M,85,100)
         else:
             st.write("Session Data is not available.")
@@ -504,7 +504,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r12M.describe())
-                load_plot2(df_r12M,1,70,75,125)
+                load_plot2(df_r12M,0,70,65,125)
                 load_plot3(df_r12M,75,90)
         else:
             st.write("Session Data is not available.")
@@ -538,7 +538,7 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r13M.describe())
-                load_plot2(df_r13M,1,65,70,150)
+                load_plot2(df_r13M,0,65,50,150)
                 load_plot3(df_r13M,75,85)
         else:
             st.write("Session Data is not available.")
@@ -572,7 +572,7 @@ def load_pages():
             else:
                 #st.write(df_r14M.describe())
                 load_toptennracefinsh(df_r14M,sectorno)
-                load_plot2(df_r14M,1,60,65,150)
+                load_plot2(df_r14M,0,60,65,150)
                 load_plot3(df_r14M,95,110)
         else:
             st.write("Session Data is not available.")
