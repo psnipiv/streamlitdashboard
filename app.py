@@ -777,6 +777,7 @@ def load_plot1(df,startlap,endlap,mintime,maxtime,sectorno):
     fig = px.scatter(df, x="LAPS", y=sectorno, color="NAME",template="ggplot2",width=1200,height=600, hover_name="TYRE",trendline="lowess",color_discrete_map=color_dict)
     fig.update_xaxes(range=[startlap,endlap],title_text='Lap Number')
     fig.update_yaxes(range=[mintime,maxtime],title_text='Total sector time')
+    fig.update_layout(plot_bgcolor ='#eeeeee',legend_bgcolor='#eeeeee')
     st.plotly_chart(fig)
 
 def load_plot2(df,startlap,endlap,mintime,maxtime):
@@ -785,6 +786,7 @@ def load_plot2(df,startlap,endlap,mintime,maxtime):
     fig = px.scatter(df, x="LAPNO", y="S123", color="DRIVERCODE",template="ggplot2",width=1200,height=600, hover_name="TYRE",trendline="lowess",color_discrete_map=color_dict)
     fig.update_xaxes(range=[startlap,endlap],title_text='Lap Number')
     fig.update_yaxes(range=[mintime,maxtime],title_text='Total sector time')
+    fig.update_layout(plot_bgcolor ='#eeeeee',legend_bgcolor='#eeeeee')
     st.plotly_chart(fig)
 
 def load_plot3(df,mintime,maxtime):
@@ -807,7 +809,7 @@ def load_plot4(df,mintime,maxtime,sectorno):
     if optiontyres =="Tyre Compound":
         fig = px.box(df, x="TYRECOMPOUND", y=sectorno,color="NAME",width=1200,height=600,color_discrete_map=color_dict)
         fig.update_xaxes(title_text='Tyre Compounds')
-
+    fig.update_layout(plot_bgcolor ='#eeeeee',legend_bgcolor='#eeeeee')
     fig.update_yaxes(range=[mintime,maxtime],title_text='Total sector time')
    
     st.plotly_chart(fig)
