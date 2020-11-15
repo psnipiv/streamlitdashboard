@@ -547,11 +547,10 @@ def load_pages():
         st.markdown("""# Formula 1 - Turkish GP 2020""")
         # SelectBox
         testdayno = st.selectbox("Select  Session",["Practice","Main Race"])
-
+        sectorno = get_sector()
         if testdayno == "Practice":
             readme_text = st.markdown(read_markdown("14-Practice.md"))
             sessionno = st.radio("Select Practice Session",("Practice 1","Practice 2","Practice 3"))
-            sectorno = get_sector()
             if sessionno =="Practice 1":
                 if df_r14P1.empty:
                     st.write("Session Data is not available.")
@@ -572,8 +571,9 @@ def load_pages():
                 st.write("Session Data is not available.")
             else:
                 #st.write(df_r14M.describe())
-                load_plot2(df_r14M,1,60,70,150)
-                load_plot3(df_r14M,75,85)
+                load_toptennracefinsh(df_r14M,sectorno)
+                load_plot2(df_r14M,1,60,65,150)
+                load_plot3(df_r14M,95,110)
         else:
             st.write("Session Data is not available.")
 
@@ -814,6 +814,15 @@ def load_plot4(df,mintime,maxtime,sectorno):
    
     st.plotly_chart(fig)
 
+def load_toptennracefinsh(df,sectorno):
+    df = df[df['LAPNO'] != 1]
+    meansectorval = df[sectorno].mean()
+    newdf1 = df[df[sectorno] < meansectorval]
+    topdf = newdf1.groupby(['NAME','N'])[sectorno].mean().reset_index(level='NAME').sort_values(by=sectorno,ascending=True)
+    top10df = topdf.head(10)
+    st.markdown("""#### Top 10 drivers based on average laptime.""")
+    st.text("Select the above dropdown to get performance by sector.")
+    st.table(top10df[['NAME',sectorno]])
 
 def read_markdown(markdownfile):
     markdowncontentstr =""
