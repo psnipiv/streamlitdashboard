@@ -18,7 +18,6 @@ def main():
     select_block_container_style()
 
 
-
 def load_pages():
     # Race 1 Data
     df_r1M = load_data_session('r1M')
@@ -91,8 +90,9 @@ def load_pages():
     df_r14P2 = load_data_session('r14P2')
     df_r14P3 = load_data_session('r14P3')
     
-    page = st.sidebar.selectbox("Choose a page", ['Home Page','1-Austria GP','2-Styria GP','3-Hungary GP', '4-British GP', "5-70th Anniversary GP",
-     "6-Spanish GP","7-Belgium GP","8-Italian GP","9-Tuscany GP","10-Russian GP","11-Germany GP", "12-Portugal GP", "13-Imola GP", "14-Turkish GP" ])
+    sidebar_dropdownlist = ['Home Page',"14-Turkish GP","13-Imola GP","12-Portugal GP","11-Germany GP","10-Russian GP","9-Tuscany GP","8-Italian GP","7-Belgium GP",
+    "6-Spanish GP","5-70th Anniversary GP",'4-British GP','3-Hungary GP','2-Styria GP','1-Austria GP']
+    page = st.sidebar.selectbox("Choose a page", sidebar_dropdownlist)
 
     if page == 'Home Page':
         st.title('Formula 1 2020 Season')
@@ -758,24 +758,31 @@ def load_data_session(session):
     elif session == 'r14M':
         sessionfile = '14-Final_MainRaceData.json'
 
+    colorcodedf = get_colorcode()
     if sessionfile != '':     
         with open(sessionfile) as json_file:
             jsondata = json.load(json_file)
         data = pd.DataFrame(jsondata)
+        if data.empty:
+            data = data
+        else:
+            data = data.merge(colorcodedf,how="left",on="N")
     else:
         data = pd.DataFrame()
     return data
 
 def load_plot1(df,startlap,endlap,mintime,maxtime,sectorno):
     df = df.sort_values(['N'],ascending=[1])
-    fig = px.scatter(df, x="LAPS", y=sectorno, color="NAME",template="ggplot2",width=1200,height=600, hover_name="TYRE",trendline="lowess")
+    color_dict = dict(zip(df.NAME, df.COLORCODE))
+    fig = px.scatter(df, x="LAPS", y=sectorno, color="NAME",template="ggplot2",width=1200,height=600, hover_name="TYRE",trendline="lowess",color_discrete_map=color_dict)
     fig.update_xaxes(range=[startlap,endlap],title_text='Lap Number')
     fig.update_yaxes(range=[mintime,maxtime],title_text='Total sector time')
     st.plotly_chart(fig)
 
 def load_plot2(df,startlap,endlap,mintime,maxtime):
     df = df.sort_values(['N'],ascending=[1])
-    fig = px.scatter(df, x="LAPNO", y="S123", color="DRIVERCODE",template="ggplot2",width=1200,height=600, hover_name="TYRE",trendline="lowess")
+    color_dict = dict(zip(df.DRIVERCODE, df.COLORCODE))
+    fig = px.scatter(df, x="LAPNO", y="S123", color="DRIVERCODE",template="ggplot2",width=1200,height=600, hover_name="TYRE",trendline="lowess",color_discrete_map=color_dict)
     fig.update_xaxes(range=[startlap,endlap],title_text='Lap Number')
     fig.update_yaxes(range=[mintime,maxtime],title_text='Total sector time')
     st.plotly_chart(fig)
@@ -792,12 +799,13 @@ def load_plot3(df,mintime,maxtime):
 
 def load_plot4(df,mintime,maxtime,sectorno):
     df = df.sort_values(['N'],ascending=[1])
+    color_dict = dict(zip(df.NAME, df.COLORCODE))
     optiontyres = st.radio("By Tyre Compound or Overall?",("Overall","Tyre Compound"))
     if optiontyres == "Overall":
-        fig = px.box(df, x="NAME", y=sectorno,color ="NAME",width=1200,height=600)
+        fig = px.box(df, x="NAME", y=sectorno,color ="NAME",width=1200,height=600,color_discrete_map=color_dict)
         fig.update_xaxes(title_text='Name')
     if optiontyres =="Tyre Compound":
-        fig = px.box(df, x="TYRECOMPOUND", y=sectorno,color="NAME",width=1200,height=600)
+        fig = px.box(df, x="TYRECOMPOUND", y=sectorno,color="NAME",width=1200,height=600,color_discrete_map=color_dict)
         fig.update_xaxes(title_text='Tyre Compounds')
 
     fig.update_yaxes(range=[mintime,maxtime],title_text='Total sector time')
@@ -834,6 +842,10 @@ def select_block_container_style():
         padding_left,
         padding_bottom,
     )
+
+def get_colorcode():
+    colorcodedf = pd.read_csv('ColorCodes.csv',index_col=False,header=0)
+    return colorcodedf
 
 
 def _set_block_container_style(max_width: int = 1200,max_width_100_percent: bool = False,padding_top: int = 5,padding_right: int = 1,padding_left: int = 1,padding_bottom: int = 10):
