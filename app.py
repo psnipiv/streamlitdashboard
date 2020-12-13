@@ -689,7 +689,7 @@ def load_pages():
             else:
                 #st.write(df_r17M.describe())
                 load_toptennracefinsh(df_r17M,sectorno)
-                load_plot2(df_r17M,0,60,95,180)
+                load_plot2(df_r17M,0,60,100,170)
                 load_plot3(df_r17M,95,115)
         else:
             st.write("Session Data is not available.")
